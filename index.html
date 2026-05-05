@@ -1,0 +1,1532 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Digital Skills Games</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:linear-gradient(135deg,#eef2ff,#fdf2f8);
+  text-align:center;
+}
+
+.screen{display:none; padding:30px;}
+.active{display:block;}
+
+h1,h2{color:#24304f;}
+
+.main-cards{
+  display:grid;
+  grid-template-columns:repeat(2, 1fr);
+  gap:16px;
+  max-width:560px;
+  margin:30px auto 0;
+  padding:0 12px;
+}
+
+.game-card{
+  width:auto;
+  min-height:170px;
+  background:white;
+  border-radius:22px;
+  padding:20px 14px;
+  box-shadow:0 10px 25px rgba(0,0,0,.12);
+  cursor:pointer;
+  transition:.3s;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+}
+
+.game-card:hover{
+  transform:translateY(-6px);
+}
+
+.game-card .icon{
+  font-size:48px;
+  margin-bottom:8px;
+}
+
+.game-card h2{
+  font-size:18px;
+  margin:8px 0;
+}
+
+.game-card p{
+  font-size:13px;
+  line-height:1.5;
+  margin:0;
+  color:#475569;
+}
+@media (max-width:360px){
+  .main-cards{
+    grid-template-columns:1fr;
+  }
+}
+#home{
+  min-height:100vh;
+  box-sizing:border-box;
+}
+
+#home h1{
+  font-size:26px;
+  line-height:1.4;
+  margin-top:20px;
+}
+
+#home p{
+  font-size:15px;
+  color:#475569;
+}
+
+button{
+  padding:10px 18px;
+  margin:6px;
+  border:none;
+  border-radius:12px;
+  background:#4f46e5;
+  color:white;
+  font-size:16px;
+  cursor:pointer;
+}
+
+.back{
+  background:#64748b;
+}
+
+/* Robot game */
+#grid{
+  width:300px;
+  height:300px;
+  border:3px solid #222;
+  margin:20px auto;
+  position:relative;
+  background:white;
+  background-image:
+  linear-gradient(to right,#ddd 1px,transparent 1px),
+  linear-gradient(to bottom,#ddd 1px,transparent 1px);
+  background-size:60px 60px;
+}
+
+#robot{
+  width:50px;
+  height:50px;
+  position:absolute;
+  font-size:38px;
+  transition:.3s;
+}
+
+.goal{
+  width:50px;
+  height:50px;
+  position:absolute;
+  font-size:35px;
+}
+
+.wall{
+  width:60px;
+  height:60px;
+  background:#444;
+  position:absolute;
+}
+
+/* Card game - Purple Theme */
+.card-game-area{
+  display:flex;
+  justify-content:center;
+  gap:25px;
+  flex-wrap:wrap;
+  margin-top:20px;
+}
+
+.categories{
+  display:grid;
+  grid-template-columns:repeat(2,190px);
+  gap:18px;
+}
+
+.category{
+  min-height:150px;
+  background:linear-gradient(180deg,#ffffff,#faf5ff);
+  border:3px dashed #a855f7;
+  border-radius:22px;
+  padding:15px;
+  box-shadow:0 10px 25px rgba(88,28,135,.15);
+}
+
+.category h3{
+  margin-top:0;
+  color:#581c87;
+  font-size:17px;
+}
+
+.deck-area{
+  width:240px;
+  min-height:310px;
+  background:linear-gradient(180deg,#f5f3ff,#ede9fe);
+  border-radius:26px;
+  padding:20px;
+  box-shadow:0 10px 25px rgba(88,28,135,.18);
+  border:2px solid #c084fc;
+}
+
+.deck{
+  width:160px;
+  height:220px;
+  margin:auto;
+  background:linear-gradient(135deg,#7e22ce,#c026d3,#e879f9);
+  border-radius:22px;
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:24px;
+  box-shadow:0 14px 28px rgba(88,28,135,.35);
+  cursor:pointer;
+  position:relative;
+}
+
+.deck::before{
+  content:"";
+  position:absolute;
+  width:160px;
+  height:220px;
+  background:#a855f7;
+  border-radius:22px;
+  top:8px;
+  right:8px;
+  z-index:-1;
+  opacity:.45;
+}
+
+.play-card{
+  width:165px;
+  min-height:105px;
+  margin:15px auto;
+  background:white;
+  border-radius:22px;
+  padding:15px;
+  box-shadow:0 10px 24px rgba(88,28,135,.25);
+  cursor:grab;
+  border-top:9px solid #9333ea;
+  font-weight:bold;
+  color:#3b0764;
+}
+
+.card-icon{
+  font-size:34px;
+  display:block;
+  margin-bottom:8px;
+}
+
+.small-card{
+  background:#f3e8ff;
+  border:1px solid #c084fc;
+  color:#581c87;
+  border-radius:14px;
+  padding:8px;
+  margin-top:8px;
+  font-size:14px;
+  font-weight:bold;
+}
+
+#cardMessage{
+  font-weight:bold;
+  font-size:18px;
+  min-height:24px;
+  color:#581c87;
+}
+
+#cardLevelTitle{
+  color:#7e22ce;
+}
+/* Office Challenge */
+.office-scene{
+  width:420px;
+  margin:25px auto;
+  position:relative;
+  background:linear-gradient(180deg,#ffffff,#f3e8ff);
+  border-radius:28px;
+  padding:25px;
+  box-shadow:0 15px 35px rgba(88,28,135,.18);
+  overflow:hidden;
+}
+
+.speech{
+  background:white;
+  color:#3b0764;
+  border-radius:22px;
+  padding:15px;
+  width:300px;
+  margin:0 auto 20px;
+  box-shadow:0 8px 20px rgba(88,28,135,.15);
+  font-weight:bold;
+  line-height:1.7;
+  position:relative;
+}
+
+.speech::after{
+  content:"";
+  position:absolute;
+  bottom:-14px;
+  right:80px;
+  border-width:14px 12px 0 12px;
+  border-style:solid;
+  border-color:white transparent transparent transparent;
+}
+
+.sara-wrap{
+  position:relative;
+  width:180px;
+  margin:0 auto;
+}
+
+.hair{
+  width:115px;
+  height:150px;
+  background:#3b1f1f;
+  border-radius:55px 55px 45px 45px;
+  position:absolute;
+  top:1px;
+  left:32px;
+  z-index:1;
+}
+
+.face{
+  width:100px;
+  height:100px;
+  background:#f8cfa9;
+  border-radius:50%;
+  position:relative;
+  margin:15px auto 0;
+  z-index:2;
+  box-shadow:inset 0 -5px 0 rgba(0,0,0,.05);
+}
+
+.bangs{
+  position:absolute;
+  top:0;
+  left:4px;
+  width:92px;
+  height:30px;
+  background:#3b1f1f;
+  border-radius:35px 35px 0 0;
+}
+
+.eye{
+  width:10px;
+  height:10px;
+  background:#1f2937;
+  border-radius:50%;
+  position:absolute;
+  top:42px;
+}
+
+.eye.left{left:28px;}
+.eye.right{right:28px;}
+
+.cheek{
+  width:14px;
+  height:8px;
+  background:#f9a8d4;
+  border-radius:50%;
+  position:absolute;
+  top:58px;
+  opacity:.7;
+}
+
+.cheek.left{left:18px;}
+.cheek.right{right:18px;}
+
+.mouth{
+  position:absolute;
+  left:35px;
+  width:30px;
+  height:16px;
+  bottom:22px;
+}
+
+.mouth.neutral{
+  height:4px;
+  background:#7f1d1d;
+  border-radius:8px;
+  bottom:28px;
+}
+
+.mouth.happy{
+  border-bottom:4px solid #7f1d1d;
+  border-radius:0 0 25px 25px;
+}
+
+.mouth.sad{
+  border-top:4px solid #7f1d1d;
+  border-radius:25px 25px 0 0;
+  bottom:18px;
+}
+
+.body{
+  width:95px;
+  height:85px;
+  background:linear-gradient(180deg,#a855f7,#7e22ce);
+  border-radius:35px 35px 12px 12px;
+  margin:-5px auto 0;
+  position:relative;
+  z-index:1;
+}
+
+.arm{
+  width:18px;
+  height:65px;
+  background:#f8cfa9;
+  border-radius:14px;
+  position:absolute;
+  top:115px;
+  z-index:3;
+}
+
+.arm.left{
+  left:38px;
+  transform:rotate(25deg);
+}
+
+.arm.right{
+  right:38px;
+  transform:rotate(-25deg);
+}
+
+.desk{
+  width:330px;
+  height:75px;
+  background:linear-gradient(180deg,#b7794b,#8b5a2b);
+  margin:-10px auto 0;
+  border-radius:18px;
+  position:relative;
+  z-index:4;
+  box-shadow:0 12px 20px rgba(92,51,23,.25);
+}
+
+.paper-pencil{
+  position:absolute;
+  left:28px;
+  top:12px;
+  font-size:34px;
+  z-index:6;
+}
+
+.cup{
+  position:absolute;
+  right:30px;
+  top:2px;
+  font-size:32px;
+  z-index:6;
+}
+
+.laptop{
+  width:120px;
+  height:70px;
+  background:#334155;
+  border-radius:8px 8px 2px 2px;
+  position:absolute;
+  top:-50px;
+  left:105px;
+  box-shadow:0 8px 12px rgba(0,0,0,.2);
+}
+
+.laptop::after{
+  content:"";
+  position:absolute;
+  width:150px;
+  height:12px;
+  background:#1e293b;
+  border-radius:10px;
+  bottom:-12px;
+  left:-15px;
+}
+
+.stars{
+  position:absolute;
+  top:70px;
+  left:0;
+  right:0;
+  font-size:28px;
+  opacity:0;
+  transform:scale(.5);
+  transition:.3s;
+  pointer-events:none;
+}
+
+.stars.show{
+  opacity:1;
+  transform:scale(1.2);
+}
+
+.shake{
+  animation:shake .35s;
+}
+
+@keyframes shake{
+  0%{transform:translateX(0);}
+  25%{transform:translateX(10px);}
+  50%{transform:translateX(-10px);}
+  75%{transform:translateX(8px);}
+  100%{transform:translateX(0);}
+}
+
+.office-tools{
+  display:flex;
+  justify-content:center;
+  gap:15px;
+  flex-wrap:wrap;
+  margin-top:20px;
+}
+
+.office-tools button{
+  width:120px;
+  height:115px;
+  background:white;
+  color:#3b0764;
+  border-radius:20px;
+  box-shadow:0 8px 20px rgba(88,28,135,.15);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  font-weight:bold;
+  transition:.2s;
+}
+
+.office-tools button:hover{
+  transform:translateY(-5px);
+  background:#faf5ff;
+}
+
+.office-tools img{
+  width:45px;
+  height:45px;
+  object-fit:contain;
+}
+
+#officeMessage{
+  font-weight:bold;
+  color:#581c87;
+  font-size:18px;
+}
+/* الراوتر */
+.router{
+  position:absolute;
+  right:17px;
+  top:45px;
+  width:80px;
+  height:30px;
+  background:#374151;
+  border-radius:10px;
+  z-index:7;
+  box-shadow:0 4px 8px rgba(0,0,0,.3);
+}
+
+/* الهوائيات */
+.antenna{
+  position:absolute;
+  width:4px;
+  height:25px;
+  background:#111827;
+  top:-22px;
+  border-radius:2px;
+}
+
+.antenna.left{
+  left:15px;
+  transform:rotate(-10deg);
+}
+
+.antenna.right{
+  right:15px;
+  transform:rotate(10deg);
+}
+
+/* لمبة الراوتر */
+.router-light{
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:#ef4444; /* أحمر */
+  position:absolute;
+  bottom:8px;
+  left:35px;
+  box-shadow:0 0 10px #ef4444;
+  animation:blink 1s infinite;
+}
+
+/* لما يشتغل */
+.router.ok .router-light{
+  background:#22c55e; /* أخضر */
+  box-shadow:0 0 12px #22c55e;
+  animation:none;
+}
+.laptop-screen{
+  color:#ef4444; /* أحمر في بداية المشكلة */
+  font-size:14px;
+  margin-top:18px;
+  font-weight:bold;
+  line-height:1.4;
+  transition:.3s;
+}
+
+/* بعد إصلاح الشبكة */
+.laptop-screen.ok{
+  color:#22c55e; /* أخضر */
+  text-shadow:0 0 8px #22c55e;
+}
+
+/* حركة الوميض */
+@keyframes blink{
+  0%{opacity:1;}
+  50%{opacity:.3;}
+  100%{opacity:1;}
+}
+.signature{
+  margin-top:30px;
+  font-size:14px;
+  color:#64748b;
+  opacity:.8;
+}
+</style>
+</head>
+
+<body>
+
+<!-- الصفحة الرئيسية -->
+<div id="home" class="screen active">
+  <h1>🎮 منصة العاب مهاراتي الرقمية </h1>
+  <p class="signature">تصميم المعلمة: خلود حمود الحربي💜</p>
+  <p>اختاري اللعبة وابدئي التحدي</p>
+
+  <div class="main-cards">
+  <div class="game-card" onclick="showScreen('officeScreen')">
+  <div class="icon">💼</div>
+  <h2>تحدي المكتب الذكي</h2>
+  <p>ساعدي سارة في اختيار الأداة المناسبة</p>
+</div>
+
+<div class="game-card" onclick="showScreen('networkScreen')">
+  <div class="icon">🌐</div>
+  <h2>مهمة إصلاح الشبكة</h2>
+  <p>ساعدي سارة في تشخيص مشكلة الإنترنت وإصلاحها</p>
+</div>
+    <div class="game-card" onclick="showScreen('robotScreen')">
+      <div class="icon">🤖</div>
+      <h2>لعبة الروبوت</h2>
+      <p>حرّكي الروبوت حتى يصل إلى الهدف</p>
+    </div>
+	
+    <div class="game-card" onclick="showScreen('cardsScreen')">
+      <div class="icon">🃏</div>
+      <h2>لعبة البطاقات</h2>
+      <p>اسحبي البطاقة وضعيها في الفئة الصحيحة</p>
+    </div>
+  </div>
+</div>
+
+<!-- لعبة الروبوت -->
+<div id="robotScreen" class="screen">
+  <button class="back" onclick="showScreen('home')">رجوع</button>
+  <h2>🤖 Robot Mission</h2>
+  <h3 id="levelTitle">Level 1</h3>
+  <p>Score: <span id="robotScore">100</span></p>
+
+  <div id="grid">
+    <div id="robot">🤖</div>
+  </div>
+
+  <button onclick="moveForward()">الى الامام</button>
+  <button onclick="turnLeft()">تدوير لليسار</button>
+  <button onclick="turnRight()">تدوير لليمين</button>
+  <button onclick="resetLevel()">اعادة اللعبة</button>
+
+  <p id="robotStatus"></p>
+</div>
+
+<!-- لعبة البطاقات -->
+<div id="cardsScreen" class="screen">
+  <button class="back" onclick="showScreen('home')">رجوع</button>
+
+  <h2>🃏 لعبة البطاقات الرقمية</h2>
+  <h3 id="cardLevelTitle">Level 1</h3>
+
+  <p>Score: <span id="cardScore">100</span></p>
+  <p id="cardInstruction">اسحبي البطاقة وضعيها في الفئة الصحيحة</p>
+
+  <div class="card-game-area">
+
+    <div class="categories" id="categoriesContainer"></div>
+
+    <div class="deck-area">
+      <h3>🎴 Deck</h3>
+      <div class="deck" onclick="drawCard()">اسحبي بطاقة</div>
+      <div id="currentCard"></div>
+    </div>
+
+  </div>
+
+  <p id="cardMessage"></p>
+</div>
+<!-- لعبة إصلاح الشبكة -->
+<div id="networkScreen" class="screen">
+  <button class="back" onclick="showScreen('home')">رجوع</button>
+
+  <h2>🌐 مهمة إصلاح الشبكة</h2>
+
+  <div class="status-bar">
+    <div>المستوى: <span id="networkLevelText">1</span></div>
+    <div>النقاط: <span id="networkScoreText">100</span></div>
+    <div>الوقت: <span id="networkTimerText">15</span></div>
+  </div>
+
+  <div class="office-scene" id="networkScene">
+
+    <div class="speech">
+      <span id="networkSaraText">الإنترنت لا يعمل! لا أستطيع إكمال عملي… هل يمكنك مساعدتي؟</span>
+    </div>
+
+    <div class="stars" id="networkStars">✨ ⭐ ✨</div>
+
+    <div class="sara-wrap">
+      <div class="hair"></div>
+
+      <div class="face">
+        <div class="bangs"></div>
+        <div class="eye left"></div>
+        <div class="eye right"></div>
+        <div class="cheek left"></div>
+        <div class="cheek right"></div>
+        <div id="networkMouth" class="mouth sad"></div>
+      </div>
+
+      <div class="body"></div>
+      <div class="arm left"></div>
+      <div class="arm right"></div>
+    </div>
+
+   <div class="desk">
+  <div class="paper-pencil">📝</div>
+
+  <div class="laptop">
+    <div class="laptop-screen" id="networkScreenText">🚫<br>No Internet</div>
+  </div>
+
+  <div class="router" id="networkRouter">
+    <div class="antenna left"></div>
+    <div class="antenna right"></div>
+    <div class="router-light"></div>
+  </div>
+
+  <div class="cup">☕</div>
+</div>
+</div>
+  <h3 id="networkTaskTitle">المرحلة 1: التشخيص الأول</h3>
+
+  <div class="options" id="networkOptions"></div>
+
+  <p id="networkMessage"></p>
+
+  <button class="reset" onclick="restartNetworkGame()">إعادة اللعبة</button>
+</div>
+<!-- لعبة تحدي المكتب -->
+<div id="officeScreen" class="screen">
+  <button class="back" onclick="showScreen('home')">رجوع</button>
+
+  <h2>💼 تحدي المكتب الذكي</h2>
+  <h3 id="officeLevel">Level 1</h3>
+
+  <p>Score: <span id="officeScore">100</span></p>
+  <p>Time: <span id="officeTimer">10</span></p>
+
+  <div class="office-scene" id="officeScene">
+
+    <div class="speech">
+      <span id="saraText">مرحبًا، أنا سارة. ساعديني في اختيار الأداة المناسبة للمهمة.</span>
+    </div>
+
+    <div class="stars" id="stars">✨ ⭐ ✨</div>
+
+    <div class="sara-wrap">
+      <div class="hair"></div>
+
+      <div class="face">
+        <div class="bangs"></div>
+        <div class="eye left"></div>
+        <div class="eye right"></div>
+        <div class="cheek left"></div>
+        <div class="cheek right"></div>
+        <div id="mouth" class="mouth neutral"></div>
+      </div>
+
+      <div class="body"></div>
+      <div class="arm left"></div>
+      <div class="arm right"></div>
+    </div>
+
+    <div class="desk">
+      <div class="paper-pencil">📝</div>
+
+      <div class="laptop">
+        <div class="laptop-screen"></div>
+      </div>
+
+      <div class="cup">☕</div>
+    </div>
+  </div>
+
+  <div class="office-tools">
+
+
+    <button onclick="chooseTool('excel')">
+      <img src="assets/excel.png" alt="Excel">
+      <span>Excel</span>
+    </button>
+	<button onclick="chooseTool('onedrive')">
+      <img src="assets/onedrive.png" alt="OneDrive">
+      <span>OneDrive</span>
+    </button>
+	    <button onclick="chooseTool('word')">
+      <img src="assets/word.jpg" alt="Word">
+      <span>Word</span>
+    </button>
+	    <button onclick="chooseTool('teams')">
+      <img src="assets/teams.png" alt="Teams">
+      <span>Teams</span>
+    </button>
+
+    <button onclick="chooseTool('powerpoint')">
+      <img src="assets/powerpoint.png" alt="PowerPoint">
+      <span>PowerPoint</span>
+    </button>
+
+
+
+
+  </div>
+
+  <p id="officeMessage"></p>
+</div>
+<script>
+/* التنقل بين الشاشات */
+function showScreen(id){
+  document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+}
+
+/* لعبة الروبوت */
+const cell = 60;
+let level = 1;
+let x = 0;
+let y = 0;
+let direction = "right";
+let robotScore = 100;
+let robotWon = false;
+
+const levels = {
+  1: {
+    startX:0, startY:0, startDirection:"right",
+    goalX:240, goalY:240,
+    walls:[]
+  },
+  2: {
+    startX:0, startY:0, startDirection:"right",
+    goalX:240, goalY:240,
+    walls:[
+      {x:120,y:0},
+      {x:120,y:60},
+      {x:120,y:120},
+      {x:60,y:180}
+    ]
+  }
+};
+
+function loadLevel(){
+  const current = levels[level];
+  x = current.startX;
+  y = current.startY;
+  direction = current.startDirection;
+  robotScore = 100;
+  robotWon = false;
+
+  document.getElementById("levelTitle").innerText = "Level " + level;
+  document.getElementById("robotScore").innerText = robotScore;
+  document.getElementById("robotStatus").innerText = "";
+
+  drawRobotGrid();
+  updateRobot();
+}
+
+function drawRobotGrid(){
+  const grid = document.getElementById("grid");
+  grid.innerHTML = '<div id="robot">🤖</div>';
+
+  const current = levels[level];
+
+  const goal = document.createElement("div");
+  goal.className = "goal";
+  goal.innerText = "🎯";
+  goal.style.left = current.goalX + "px";
+  goal.style.top = current.goalY + "px";
+  grid.appendChild(goal);
+
+  current.walls.forEach(wall=>{
+    const block = document.createElement("div");
+    block.className = "wall";
+    block.style.left = wall.x + "px";
+    block.style.top = wall.y + "px";
+    grid.appendChild(block);
+  });
+}
+
+function moveForward(){
+	if(robotWon) return;
+  let newX = x;
+  let newY = y;
+
+  if(direction === "right") newX += cell;
+  if(direction === "left") newX -= cell;
+  if(direction === "up") newY -= cell;
+  if(direction === "down") newY += cell;
+
+  if(canMove(newX,newY)){
+    x = newX;
+    y = newY;
+    reduceRobotScore();
+    updateRobot();
+    checkRobotWin();
+  }else{
+    document.getElementById("robotStatus").innerText = "🚧 لا يمكن التحرك هنا!";
+    reduceRobotScore();
+  }
+}
+
+function turnLeft(){
+if(robotWon) return;
+  if(direction === "right") direction = "up";
+  else if(direction === "up") direction = "left";
+  else if(direction === "left") direction = "down";
+  else if(direction === "down") direction = "right";
+  reduceRobotScore();
+  updateRobot();
+}
+
+function turnRight(){
+if(robotWon) return;
+  if(direction === "right") direction = "down";
+  else if(direction === "down") direction = "left";
+  else if(direction === "left") direction = "up";
+  else if(direction === "up") direction = "right";
+  reduceRobotScore();
+  updateRobot();
+}
+
+function canMove(newX,newY){
+  if(newX < 0 || newX > 240 || newY < 0 || newY > 240) return false;
+  return !levels[level].walls.some(w => w.x === newX && w.y === newY);
+}
+
+function reduceRobotScore(){
+  robotScore -= 1;
+  document.getElementById("robotScore").innerText = robotScore;
+}
+
+function updateRobot(){
+  const robot = document.getElementById("robot");
+  robot.style.left = x + "px";
+  robot.style.top = y + "px";
+
+  if(direction === "right") robot.style.transform = "rotate(0deg)";
+  if(direction === "down") robot.style.transform = "rotate(90deg)";
+  if(direction === "left") robot.style.transform = "rotate(180deg)";
+  if(direction === "up") robot.style.transform = "rotate(270deg)";
+}
+
+function checkRobotWin(){
+  const current = levels[level];
+
+  if(x === current.goalX && y === current.goalY){
+    robotWon = true;
+
+    document.getElementById("robotStatus").innerText =
+      "🎉 وصلتي للهدف! نتيجتك: " + robotScore;
+
+    if(level === 1){
+      setTimeout(()=>{
+        level = 2;
+        loadLevel();
+      },1500);
+    }else{
+      document.getElementById("robotStatus").innerText =
+        "🏆 أنهيتِ جميع مراحل الروبوت! نتيجتك: " + robotScore;
+    }
+  }
+}
+ 
+
+function resetLevel(){
+  loadLevel();
+}
+
+loadLevel();
+/* لعبة البطاقات - 3 مستويات */
+let cardScore = 100;
+let currentCard = null;
+let cardLevel = 1;
+let deck = [];
+
+const cardLevels = {
+  1: {
+    title: "Level 1: مكونات الحاسوب",
+    instruction: "صنّفي البطاقات حسب نوع المكوّن",
+    categories: [
+      {id:"input", title:"⌨️ أجهزة إدخال"},
+      {id:"output", title:"🖨️ أجهزة إخراج"},
+      {id:"storage", title:"💾 وحدات تخزين"},
+      {id:"processing", title:"🧠 معالجة"}
+    ],
+    cards: [
+      {text:"لوحة المفاتيح", icon:"⌨️", category:"input"},
+      {text:"الفأرة", icon:"🖱️", category:"input"},
+      {text:"الميكروفون", icon:"🎙️", category:"input"},
+      {text:"الشاشة", icon:"🖥️", category:"output"},
+      {text:"الطابعة", icon:"🖨️", category:"output"},
+      {text:"السماعات", icon:"🔊", category:"output"},
+      {text:"USB", icon:"💾", category:"storage"},
+      {text:"القرص الصلب", icon:"💽", category:"storage"},
+      {text:"المعالج CPU", icon:"🧠", category:"processing"}
+    ]
+  },
+
+  2: {
+    title: "Level 2: الإنترنت والملفات",
+    instruction: "صنّفي المفاهيم حسب المجال الصحيح",
+    categories: [
+      {id:"network", title:"🌐 الشبكات"},
+      {id:"search", title:"🔎 البحث"},
+      {id:"cloud", title:"☁️ مشاركة الملفات"},
+      {id:"safety", title:"🔐 الأمان الرقمي"}
+    ],
+    cards: [
+      {text:"الراوتر", icon:"📡", category:"network"},
+      {text:"Wi-Fi", icon:"📶", category:"network"},
+      {text:"عنوان IP", icon:"🔢", category:"network"},
+      {text:"محرك البحث", icon:"🔎", category:"search"},
+      {text:"الكلمات المفتاحية", icon:"🔤", category:"search"},
+      {text:"المفضلة", icon:"⭐", category:"search"},
+      {text:"OneDrive", icon:"☁️", category:"cloud"},
+      {text:"مشاركة ملف", icon:"📤", category:"cloud"},
+      {text:"كلمة مرور قوية", icon:"🔐", category:"safety"},
+      {text:"رابط مشبوه", icon:"⚠️", category:"safety"}
+    ]
+  },
+
+  3: {
+    title: "Level 3: البرمجة والروبوت",
+    instruction: "صنّفي أوامر ومفاهيم البرمجة والروبوت",
+    categories: [
+      {id:"scratch", title:"🐱 Scratch"},
+      {id:"logic", title:"🧩 مفاهيم برمجية"},
+      {id:"robotParts", title:"🤖 أجزاء الروبوت"},
+      {id:"robotMoves", title:"🕹️ أوامر الحركة"}
+    ],
+    cards: [
+      {text:"العلم الأخضر", icon:"🏁", category:"scratch"},
+      {text:"الكائن Sprite", icon:"🐱", category:"scratch"},
+      {text:"المقطع البرمجي", icon:"🧱", category:"scratch"},
+      {text:"التكرار", icon:"🔁", category:"logic"},
+      {text:"الخوارزمية", icon:"🧠", category:"logic"},
+      {text:"الشرط", icon:"❓", category:"logic"},
+      {text:"المستشعر", icon:"📟", category:"robotParts"},
+      {text:"المحرك", icon:"⚙️", category:"robotParts"},
+      {text:"انعطف يمينًا", icon:"↪️", category:"robotMoves"},
+      {text:"تقدم للأمام", icon:"⬆️", category:"robotMoves"}
+    ]
+  }
+};
+
+function loadCardLevel(){
+  const levelData = cardLevels[cardLevel];
+
+  currentCard = null;
+  deck = [...levelData.cards];
+  shuffleDeck(deck);
+
+  document.getElementById("cardLevelTitle").innerText = levelData.title;
+  document.getElementById("cardInstruction").innerText = levelData.instruction;
+  document.getElementById("currentCard").innerHTML = "";
+  document.getElementById("cardMessage").innerText = "";
+
+  drawCategories(levelData.categories);
+}
+
+function drawCategories(categories){
+  const container = document.getElementById("categoriesContainer");
+  container.innerHTML = "";
+
+  categories.forEach(cat => {
+    const div = document.createElement("div");
+    div.className = "category";
+    div.dataset.category = cat.id;
+    div.ondragover = allowDrop;
+    div.ondrop = dropCard;
+    div.innerHTML = `<h3>${cat.title}</h3>`;
+    container.appendChild(div);
+  });
+}
+
+function shuffleDeck(array){
+  for(let i = array.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+}
+
+function drawCard(){
+  if(currentCard !== null){
+    document.getElementById("cardMessage").innerText = "ضعي البطاقة الحالية أولًا";
+    return;
+  }
+
+  if(deck.length === 0){
+    finishCardLevel();
+    return;
+  }
+
+  currentCard = deck.shift();
+
+  document.getElementById("currentCard").innerHTML =
+    `<div class="play-card" draggable="true" ondragstart="dragCard(event)" id="dragCard">
+      <span class="card-icon">${currentCard.icon}</span>
+      ${currentCard.text}
+    </div>`;
+
+  document.getElementById("cardMessage").innerText = "";
+}
+
+function dragCard(event){
+  event.dataTransfer.setData("text","dragCard");
+}
+
+function allowDrop(event){
+  event.preventDefault();
+}
+
+function dropCard(event){
+  event.preventDefault();
+
+  if(currentCard === null) return;
+
+  const targetCategory = event.currentTarget.dataset.category;
+
+  if(targetCategory === currentCard.category){
+    const savedCard = document.createElement("div");
+    savedCard.className = "small-card";
+    savedCard.innerText = currentCard.icon + " " + currentCard.text;
+    event.currentTarget.appendChild(savedCard);
+
+    document.getElementById("currentCard").innerHTML = "";
+    document.getElementById("cardMessage").innerText = "✅ صحيح! +3 نقاط";
+    cardScore += 3;
+    document.getElementById("cardScore").innerText = cardScore;
+
+    currentCard = null;
+  }else{
+    cardScore -= 5;
+    document.getElementById("cardScore").innerText = cardScore;
+    document.getElementById("cardMessage").innerText =
+      "❌ فئة خاطئة تقصت 5 نقاط ";
+
+    deck.push(currentCard);
+    shuffleDeck(deck);
+
+    currentCard = null;
+    document.getElementById("currentCard").innerHTML = "";
+  }
+}
+
+function finishCardLevel(){
+  if(cardLevel < 3){
+    document.getElementById("cardMessage").innerText =
+      "🎉 أنهيتِ المستوى " + cardLevel + "! سيتم فتح المستوى التالي";
+
+    setTimeout(() => {
+      cardLevel++;
+      loadCardLevel();
+    }, 1400);
+  }else{
+    document.getElementById("cardMessage").innerText =
+      "🏆 أنهيتِ جميع مستويات لعبة البطاقات! نتيجتك النهائية: " + cardScore;
+  }
+}
+
+loadCardLevel();
+/* تحدي المكتب الذكي */
+let officeScore = 100;
+let officeTask = 0;
+let officeTime = 10;
+let officeTimerInterval = null;
+let officeLocked = false;
+
+const officeTasks = [
+  {
+    level:"Level 1",
+    text:"مديرتي طلبت مني كتابة تقرير منسق يحتوي على عناوين وفقرات. ساعديني في اختيار الأداة المناسبة.",
+    answer:"word"
+  },
+  {
+    level:"Level 2",
+    text:"أحتاج إلى تنظيم درجات الطالبات وحساب المتوسط تلقائيًا. ما الأداة المناسبة لهذه المهمة؟",
+    answer:"excel"
+  },
+  {
+    level:"Level 3",
+    text:"لدي اجتماع قصير، وأحتاج إلى عرض فكرتي في شرائح تحتوي على صور ونقاط مختصرة. أي أداة أختار؟",
+    answer:"powerpoint"
+  },
+  {
+    level:"Level 4",
+    text:"انتهيت من التقرير والعرض، وأحتاج إلى مشاركة الملفات مع زميلتي. أي أداة أستخدم أولًا؟",
+    answer:"onedrive"
+  },
+  {
+    level:"Level 4",
+    text:"الآن أحتاج إلى مناقشة التعديلات مع زميلتي عبر المحادثة والاجتماع. أي أداة أستخدم؟",
+    answer:"teams"
+  }
+];
+
+function setMouth(state){
+  const mouth = document.getElementById("mouth");
+  mouth.className = "mouth " + state;
+}
+
+function startOfficeTimer(){
+  clearInterval(officeTimerInterval);
+  officeTime = 20;
+  document.getElementById("officeTimer").innerText = officeTime;
+
+  officeTimerInterval = setInterval(()=>{
+    officeTime--;
+    document.getElementById("officeTimer").innerText = officeTime;
+
+    if(officeTime <= 0){
+      clearInterval(officeTimerInterval);
+      officeScore -= 3;
+      document.getElementById("officeScore").innerText = officeScore;
+      failSara("انتهى الوقت! لنحاول مرة أخرى بسرعة.");
+    }
+  },1000);
+}
+
+function loadOfficeTask(){
+  officeLocked = false;
+
+  if(officeTask >= officeTasks.length){
+    clearInterval(officeTimerInterval);
+    setMouth("happy");
+    document.getElementById("saraText").innerText =
+      "أحسنتِ! ساعدتِني في إكمال جميع مهام المكتب.";
+    document.getElementById("officeMessage").innerText =
+      "🏆 انتهى التحدي! نتيجتك النهائية: " + officeScore;
+    return;
+  }
+
+  const task = officeTasks[officeTask];
+
+  document.getElementById("officeLevel").innerText = task.level;
+  document.getElementById("saraText").innerText = task.text;
+  document.getElementById("officeScore").innerText = officeScore;
+  document.getElementById("officeMessage").innerText = "";
+  setMouth("neutral");
+
+  startOfficeTimer();
+}
+
+function chooseTool(tool){
+  if(officeLocked) return;
+
+  const correct = officeTasks[officeTask].answer;
+
+  if(tool === correct){
+    officeLocked = true;
+    clearInterval(officeTimerInterval);
+
+    officeScore += 10;
+    document.getElementById("officeScore").innerText = officeScore;
+
+    successSara();
+
+    setTimeout(()=>{
+      officeTask++;
+      loadOfficeTask();
+    },1300);
+
+  }else{
+    officeScore -= 5;
+    document.getElementById("officeScore").innerText = officeScore;
+
+    failSara("هذه الأداة غير مناسبة للمهمة. حاولي اختيار أداة أخرى.");
+  }
+}
+
+function successSara(){
+  setMouth("happy");
+
+  document.getElementById("saraText").innerText =
+    "رائع! اخترتِ الأداة المناسبة، والآن يمكنني إكمال المهمة بنجاح.";
+
+  document.getElementById("officeMessage").innerText = "✅ اختيار صحيح! +10 نقاط";
+
+  const stars = document.getElementById("stars");
+  stars.classList.add("show");
+
+  setTimeout(()=>{
+    stars.classList.remove("show");
+  },900);
+}
+
+function failSara(message){
+  setMouth("sad");
+
+  document.getElementById("saraText").innerText = message;
+  document.getElementById("officeMessage").innerText = "❌ اختيار غير صحيح";
+
+  const scene = document.getElementById("officeScene");
+  scene.classList.add("shake");
+
+  setTimeout(()=>{
+    scene.classList.remove("shake");
+  },400);
+}
+
+loadOfficeTask();
+/* لعبة إصلاح الشبكة */
+let networkTask = 0;
+let networkScore = 100;
+let networkTime = 15;
+let networkTimer = null;
+let networkLocked = false;
+
+const networkTasks = [
+  {
+    level: 1,
+    title: "المرحلة 1: التشخيص الأول",
+    sara: "الشاشة تعرض أن الإنترنت غير متصل. قبل أن نصلح المشكلة، ما أول خطوة مناسبة للتشخيص؟",
+    screen: "🚫<br>No Internet",
+    correctMessage: "صحيح! بدأنا بفحص اتصال الجهاز بالشبكة.",
+    wrongMessage: "هذه ليست خطوة مناسبة للتشخيص. فكري أولًا في الاتصال بالشبكة.",
+    answer: "wifi",
+    options: [
+      {id:"wifi", text:" فحص اتصال Wi-Fi"},
+      {id:"word", text:" فتح برنامج Word"},
+      {id:"background", text:" تغيير خلفية الشاشة"}
+    ]
+  },
+  {
+    level: 2,
+    title: "المرحلة 2: نتيجة الفحص",
+    sara: "نتيجة الفحص: الجهاز غير متصل بالشبكة. ما الإجراء الصحيح الآن؟",
+    screen: "📶<br>Not connected",
+    correctMessage: "ممتاز! تم الاتصال بشبكة Wi-Fi الصحيحة.",
+    wrongMessage: "هذا الإجراء لا يعالج مشكلة الاتصال بالشبكة.",
+    answer: "connectWifi",
+    options: [
+      {id:"connectWifi", text:" الاتصال بشبكة Wi-Fi الصحيحة"},
+      {id:"delete", text:" حذف الملفات"},
+      {id:"ppt", text:" فتح PowerPoint"}
+    ]
+  },
+  {
+    level: 3,
+    title: "المرحلة 3: تشخيص أعمق",
+    sara: "تم الاتصال بالشبكة، لكن الإنترنت لا يزال لا يعمل. ماذا يجب أن نفحص الآن؟",
+    screen: "📶<br>Wi-Fi connected<br>No Internet",
+    correctMessage: "رائع! فحص الراوتر خطوة منطقية لأن الاتصال موجود لكن الإنترنت لا يعمل.",
+    wrongMessage: "هذا الخيار لا يفسر سبب وجود شبكة دون إنترنت.",
+    answer: "router",
+    options: [
+      {id:"router", text:" فحص الراوتر"},
+      {id:"printer", text:"🖨️ فحص الطابعة"},
+      {id:"speaker", text:"🔊 فحص السماعات"}
+    ]
+  },
+  {
+    level: 4,
+    title: "المرحلة 4: الحل النهائي",
+    sara: "وجدنا أن لمبة الإنترنت في الراوتر حمراء. ما الحل المناسب؟",
+    screen: "🔴<br>Router issue",
+    correctMessage: "أحسنتِ! تم إصلاح الاتصال بنجاح.",
+    wrongMessage: "هذا لا يصلح مشكلة الراوتر. اختاري حلًا مرتبطًا بالراوتر أو الكابل.",
+    answer: "restartRouter",
+    options: [
+      {id:"restartRouter", text:"🔌 إعادة تشغيل الراوتر أو فحص الكابل"},
+      {id:"username", text:"👤 تغيير اسم المستخدم"},
+      {id:"shutdown", text:"💻 إغلاق الحاسب فقط"}
+    ]
+  }
+];
+
+function setNetworkMouth(state){
+  document.getElementById("networkMouth").className = "mouth " + state;
+}
+
+function loadNetworkTask(){
+  networkLocked = false;
+  clearInterval(networkTimer);
+
+  const screen = document.getElementById("networkScreenText");
+  screen.classList.remove("ok");
+
+  if(networkTask >= networkTasks.length){
+    finishNetworkGame();
+    return;
+  }
+
+  const task = networkTasks[networkTask];
+
+  document.getElementById("networkLevelText").innerText = task.level;
+  document.getElementById("networkTaskTitle").innerText = task.title;
+  document.getElementById("networkSaraText").innerText = task.sara;
+  document.getElementById("networkScreenText").innerHTML = task.screen;
+  document.getElementById("networkScoreText").innerText = networkScore;
+  document.getElementById("networkMessage").innerText = "";
+
+  setNetworkMouth("sad");
+  renderNetworkOptions(task.options);
+  startNetworkTimer();
+}
+
+function renderNetworkOptions(options){
+  const box = document.getElementById("networkOptions");
+  box.innerHTML = "";
+
+  options.forEach(opt => {
+    const btn = document.createElement("button");
+    btn.innerHTML = opt.text;
+    btn.onclick = () => chooseNetworkOption(opt.id);
+    box.appendChild(btn);
+  });
+}
+
+function startNetworkTimer(){
+  networkTime = 25;
+  document.getElementById("networkTimerText").innerText = networkTime;
+
+  networkTimer = setInterval(() => {
+    networkTime--;
+    document.getElementById("networkTimerText").innerText = networkTime;
+
+    if(networkTime <= 0){
+      clearInterval(networkTimer);
+      networkScore -= 3;
+      document.getElementById("networkScoreText").innerText = networkScore;
+      failNetworkSara("انتهى الوقت! خسرتِ 3 نقاط. حاولي مرة أخرى.");
+    }
+  },1000);
+}
+
+function chooseNetworkOption(choice){
+  if(networkLocked) return;
+
+  const task = networkTasks[networkTask];
+
+  if(choice === task.answer){
+    networkLocked = true;
+    clearInterval(networkTimer);
+
+    networkScore += 10;
+    document.getElementById("networkScoreText").innerText = networkScore;
+
+    successNetworkSara(task.correctMessage);
+
+    if(networkTask === networkTasks.length - 1){
+      setTimeout(finishNetworkGame, 1200);
+    }else{
+      setTimeout(() => {
+        networkTask++;
+        loadNetworkTask();
+      }, 1300);
+    }
+
+  }else{
+    networkScore -= 5;
+    document.getElementById("networkScoreText").innerText = networkScore;
+    failNetworkSara(task.wrongMessage);
+  }
+}
+
+function successNetworkSara(message){
+  setNetworkMouth("happy");
+
+  document.getElementById("networkSaraText").innerText = message;
+  document.getElementById("networkMessage").innerText = "✅ اختيار صحيح! +10 نقاط";
+
+  const stars = document.getElementById("networkStars");
+  stars.classList.add("show");
+
+  setTimeout(() => {
+    stars.classList.remove("show");
+  },900);
+}
+
+function failNetworkSara(message){
+  setNetworkMouth("sad");
+
+  document.getElementById("networkSaraText").innerText = message;
+  document.getElementById("networkMessage").innerText = "❌ اختيار غير صحيح";
+
+  const scene = document.getElementById("networkScene");
+  scene.classList.add("shake");
+
+  setTimeout(() => {
+    scene.classList.remove("shake");
+  },400);
+}
+
+function finishNetworkGame(){
+  clearInterval(networkTimer);
+  networkLocked = true;
+
+  setNetworkMouth("happy");
+
+  const screen = document.getElementById("networkScreenText");
+  screen.innerHTML = "🌐<br>Connected<br>متصل";
+  screen.classList.add("ok");
+
+  document.getElementById("networkRouter").classList.add("ok");
+
+  document.getElementById("networkSaraText").innerText =
+    "رائع! عادت الشبكة للعمل، وأستطيع الآن إكمال عملي. شكرًا لمساعدتكِ.";
+
+  document.getElementById("networkTaskTitle").innerText = "تم إصلاح المشكلة";
+  document.getElementById("networkMessage").innerText =
+    "🏆 انتهت المهمة! نتيجتك النهائية: " + networkScore;
+
+  document.getElementById("networkOptions").innerHTML = "";
+
+  document.getElementById("networkStars").classList.add("show");
+}
+
+function restartNetworkGame(){
+  networkTask = 0;
+  networkScore = 100;
+  networkLocked = false;
+
+  document.getElementById("networkRouter").classList.remove("ok");
+  document.getElementById("networkStars").classList.remove("show");
+
+  loadNetworkTask();
+}
+
+loadNetworkTask();
+</script>
+</body>
+</html>

@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>مهمة إصلاح الشبكة</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:linear-gradient(135deg,#f5f3ff,#fdf2f8);
+  text-align:center;
+  padding:30px;
+}
+
+.office-scene{
+  width:430px;
+  margin:25px auto;
+  position:relative;
+  background:linear-gradient(180deg,#ffffff,#f3e8ff);
+  border-radius:28px;
+  padding:25px;
+  box-shadow:0 15px 35px rgba(88,28,135,.18);
+  overflow:hidden;
+}
+
+.speech{
+  background:white;
+  color:#3b0764;
+  border-radius:22px;
+  padding:15px;
+  width:310px;
+  margin:0 auto 20px;
+  box-shadow:0 8px 20px rgba(88,28,135,.15);
+  font-weight:bold;
+  line-height:1.7;
+  position:relative;
+}
+
+.speech::after{
+  content:"";
+  position:absolute;
+  bottom:-14px;
+  right:80px;
+  border-width:14px 12px 0 12px;
+  border-style:solid;
+  border-color:white transparent transparent transparent;
+}
+
+.sara-wrap{
+  position:relative;
+  width:180px;
+  margin:0 auto;
+}
+
+.hair{
+  width:115px;
+  height:150px;
+  background:#3b1f1f;
+  border-radius:55px 55px 45px 45px;
+  position:absolute;
+  top:1px;
+  left:32px;
+  z-index:1;
+}
+
+.face{
+  width:100px;
+  height:100px;
+  background:#f8cfa9;
+  border-radius:50%;
+  position:relative;
+  margin:15px auto 0;
+  z-index:2;
+  box-shadow:inset 0 -5px 0 rgba(0,0,0,.05);
+}
+
+.bangs{
+  position:absolute;
+  top:0;
+  left:4px;
+  width:92px;
+  height:30px;
+  background:#3b1f1f;
+  border-radius:35px 35px 0 0;
+}
+
+.eye{
+  width:10px;
+  height:10px;
+  background:#1f2937;
+  border-radius:50%;
+  position:absolute;
+  top:42px;
+}
+
+.eye.left{left:28px;}
+.eye.right{right:28px;}
+
+.cheek{
+  width:14px;
+  height:8px;
+  background:#f9a8d4;
+  border-radius:50%;
+  position:absolute;
+  top:58px;
+  opacity:.7;
+}
+
+.cheek.left{left:18px;}
+.cheek.right{right:18px;}
+
+.mouth{
+  position:absolute;
+  left:35px;
+  width:30px;
+  height:16px;
+  bottom:22px;
+}
+
+.mouth.neutral{
+  height:4px;
+  background:#7f1d1d;
+  border-radius:8px;
+  bottom:28px;
+}
+
+.mouth.happy{
+  border-bottom:4px solid #7f1d1d;
+  border-radius:0 0 25px 25px;
+}
+
+.mouth.sad{
+  border-top:4px solid #7f1d1d;
+  border-radius:25px 25px 0 0;
+  bottom:18px;
+}
+
+.body{
+  width:95px;
+  height:85px;
+  background:linear-gradient(180deg,#a855f7,#7e22ce);
+  border-radius:35px 35px 12px 12px;
+  margin:-5px auto 0;
+  position:relative;
+  z-index:1;
+}
+
+.arm{
+  width:18px;
+  height:65px;
+  background:#f8cfa9;
+  border-radius:14px;
+  position:absolute;
+  top:115px;
+  z-index:3;
+}
+
+.arm.left{
+  left:38px;
+  transform:rotate(25deg);
+}
+
+.arm.right{
+  right:38px;
+  transform:rotate(-25deg);
+}
+
+.desk{
+  width:340px;
+  height:82px;
+  background:linear-gradient(180deg,#b7794b,#8b5a2b);
+  margin:-10px auto 0;
+  border-radius:18px;
+  position:relative;
+  z-index:4;
+  box-shadow:0 12px 20px rgba(92,51,23,.25);
+}
+
+.paper-pencil{
+  position:absolute;
+  left:28px;
+  top:16px;
+  font-size:34px;
+  z-index:6;
+}
+
+.cup{
+  position:absolute;
+  right:28px;
+  top:3px;
+  font-size:32px;
+  z-index:6;
+}
+
+.laptop{
+  width:130px;
+  height:76px;
+  background:#334155;
+  border-radius:8px 8px 2px 2px;
+  position:absolute;
+  top:-54px;
+  left:105px;
+  box-shadow:0 8px 12px rgba(0,0,0,.2);
+}
+
+.laptop::after{
+  content:"";
+  position:absolute;
+  width:160px;
+  height:12px;
+  background:#1e293b;
+  border-radius:10px;
+  bottom:-12px;
+  left:-15px;
+}
+
+.laptop-screen{
+  color:#f87171;
+  font-size:14px;
+  margin-top:18px;
+  font-weight:bold;
+  line-height:1.4;
+}
+
+.router{
+  position:absolute;
+  right:17px;   /* نفس جهة القهوة */
+  top:50px;     /* أسفل القهوة بشوي */
+  width:80px;
+  height:30px;
+  background:#374151;
+  border-radius:10px;
+  z-index:7;
+  box-shadow:0 4px 8px rgba(0,0,0,.3);
+}
+
+/* هوائيات */
+.antenna{
+  position:absolute;
+  width:4px;
+  height:25px;
+  background:#111827;
+  top:-22px;
+  border-radius:2px;
+}
+
+.antenna.left{
+  left:15px;
+  transform:rotate(-10deg);
+}
+
+.antenna.right{
+  right:15px;
+  transform:rotate(10deg);
+}
+
+/* لمبة الحالة */
+.router-light{
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:#ef4444;
+  position:absolute;
+  bottom:8px;
+  left:35px;
+  box-shadow:0 0 10px #ef4444;
+}
+
+/* لما يشتغل */
+.router.ok .router-light{
+  background:#22c55e;
+  box-shadow:0 0 12px #22c55e;
+}
+.stars{
+  position:absolute;
+  top:70px;
+  left:0;
+  right:0;
+  font-size:28px;
+  opacity:0;
+  transform:scale(.5);
+  transition:.3s;
+  pointer-events:none;
+}
+
+.stars.show{
+  opacity:1;
+  transform:scale(1.2);
+}
+
+.shake{
+  animation:shake .35s;
+}
+
+@keyframes shake{
+  0%{transform:translateX(0);}
+  25%{transform:translateX(10px);}
+  50%{transform:translateX(-10px);}
+  75%{transform:translateX(8px);}
+  100%{transform:translateX(0);}
+}
+
+.status-bar{
+  display:flex;
+  justify-content:center;
+  gap:20px;
+  flex-wrap:wrap;
+  margin:12px 0;
+  color:#3b0764;
+  font-weight:bold;
+}
+
+.options{
+  display:flex;
+  justify-content:center;
+  gap:12px;
+  flex-wrap:wrap;
+  max-width:620px;
+  margin:20px auto;
+}
+
+.options button{
+  width:180px;
+  min-height:82px;
+  padding:12px;
+  border:none;
+  border-radius:18px;
+  background:white;
+  color:#3b0764;
+  font-size:15px;
+  font-weight:bold;
+  cursor:pointer;
+  box-shadow:0 8px 20px rgba(88,28,135,.15);
+  transition:.2s;
+}
+
+.options button:hover{
+  transform:translateY(-4px);
+  background:#faf5ff;
+}
+
+#message{
+  font-size:18px;
+  font-weight:bold;
+  color:#581c87;
+  min-height:28px;
+}
+
+.reset{
+  background:#7e22ce;
+  color:white;
+  border:none;
+  border-radius:14px;
+  padding:10px 20px;
+  font-size:16px;
+  cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🌐 مهمة إصلاح الشبكة</h1>
+
+<div class="status-bar">
+  <div>المستوى: <span id="levelText">1</span></div>
+  <div>النقاط: <span id="scoreText">100</span></div>
+  <div>الوقت: <span id="timerText">15</span></div>
+</div>
+
+<div class="office-scene" id="officeScene">
+
+  <div class="speech">
+    <span id="saraText">الإنترنت لا يعمل! لا أستطيع إكمال عملي… هل يمكنك مساعدتي؟</span>
+  </div>
+
+  <div class="stars" id="stars">✨ ⭐ ✨</div>
+
+  <div class="sara-wrap">
+    <div class="hair"></div>
+
+    <div class="face">
+      <div class="bangs"></div>
+      <div class="eye left"></div>
+      <div class="eye right"></div>
+      <div class="cheek left"></div>
+      <div class="cheek right"></div>
+      <div id="mouth" class="mouth sad"></div>
+    </div>
+
+    <div class="body"></div>
+    <div class="arm left"></div>
+    <div class="arm right"></div>
+  </div>
+
+  <div class="desk">
+    <div class="paper-pencil">📝</div>
+
+    <div class="laptop">
+      <div class="laptop-screen" id="screenText">🚫<br>No Internet</div>
+    </div>
+
+    <div class="router" id="router">
+  <div class="antenna left"></div>
+  <div class="antenna right"></div>
+  <div class="router-light"></div>
+</div>
+
+    <div class="cup">☕</div>
+  </div>
+</div>
+
+<h2 id="taskTitle">المرحلة 1: التشخيص الأول</h2>
+
+<div class="options" id="options"></div>
+
+<p id="message"></p>
+
+<button class="reset" onclick="restartGame()">إعادة اللعبة</button>
+
+<script>
+let currentTask = 0;
+let score = 100;
+let time = 15;
+let timer = null;
+let locked = false;
+
+const tasks = [
+  {
+    level: 1,
+    title: "المرحلة 1: التشخيص الأول",
+    sara: "الشاشة تقول إن الإنترنت مقطوع. قبل أن نصلح المشكلة، ما أول خطوة مناسبة للتشخيص؟",
+    screen: "🚫<br>No Internet",
+    correctMessage: "صحيح! بدأنا بفحص اتصال الجهاز بالشبكة.",
+    wrongMessage: "هذه ليست خطوة مناسبة للتشخيص. فكري أولًا في الاتصال بالشبكة.",
+    answer: "wifi",
+    options: [
+      {id:"wifi", text:"📶 فحص اتصال Wi-Fi"},
+      {id:"word", text:"📄 فتح برنامج Word"},
+      {id:"background", text:"🎨 تغيير خلفية الشاشة"}
+    ]
+  },
+  {
+    level: 2,
+    title: "المرحلة 2: نتيجة الفحص",
+    sara: "نتيجة الفحص: الجهاز غير متصل بالشبكة. ما الإجراء الصحيح الآن؟",
+    screen: "📶<br>Not connected",
+    correctMessage: "ممتاز! تم الاتصال بشبكة Wi-Fi الصحيحة.",
+    wrongMessage: "هذا الإجراء لا يعالج مشكلة الاتصال بالشبكة.",
+    answer: "connectWifi",
+    options: [
+      {id:"connectWifi", text:"✅ الاتصال بشبكة Wi-Fi الصحيحة"},
+      {id:"delete", text:"🗑️ حذف الملفات"},
+      {id:"ppt", text:"📽️ فتح PowerPoint"}
+    ]
+  },
+  {
+    level: 3,
+    title: "المرحلة 3: تشخيص أعمق",
+    sara: "تم الاتصال بالشبكة، لكن الإنترنت لا يزال لا يعمل. ماذا يجب أن نفحص الآن؟",
+    screen: "📶<br>Wi-Fi connected<br>No Internet",
+    correctMessage: "رائع! فحص الراوتر خطوة منطقية لأن الاتصال موجود لكن الإنترنت لا يعمل.",
+    wrongMessage: "هذا الخيار لا يفسر سبب وجود شبكة دون إنترنت.",
+    answer: "router",
+    options: [
+      {id:"router", text:"📡 فحص الراوتر"},
+      {id:"printer", text:"🖨️ فحص الطابعة"},
+      {id:"speaker", text:"🔊 فحص السماعات"}
+    ]
+  },
+  {
+    level: 4,
+    title: "المرحلة 4: الحل النهائي",
+    sara: "وجدنا أن لمبة الإنترنت في الراوتر حمراء. ما الحل المناسب؟",
+    screen: "🔴<br>Router issue",
+    correctMessage: "أحسنتِ! تم إصلاح الاتصال بنجاح.",
+    wrongMessage: "هذا لا يصلح مشكلة الراوتر. اختاري حلًا مرتبطًا بالراوتر أو الكابل.",
+    answer: "restartRouter",
+    options: [
+      {id:"restartRouter", text:"🔌 إعادة تشغيل الراوتر أو فحص الكابل"},
+      {id:"username", text:"👤 تغيير اسم المستخدم"},
+      {id:"shutdown", text:"💻 إغلاق الحاسب فقط"}
+    ]
+  }
+];
+
+function setMouth(state){
+  document.getElementById("mouth").className = "mouth " + state;
+}
+
+function loadTask(){
+  locked = false;
+  clearInterval(timer);
+
+  if(currentTask >= tasks.length){
+    finishGame();
+    return;
+  }
+
+  const task = tasks[currentTask];
+
+  document.getElementById("levelText").innerText = task.level;
+  document.getElementById("taskTitle").innerText = task.title;
+  document.getElementById("saraText").innerText = task.sara;
+  document.getElementById("screenText").innerHTML = task.screen;
+  document.getElementById("scoreText").innerText = score;
+  document.getElementById("message").innerText = "";
+
+  if(currentTask < tasks.length - 1){
+    setMouth("sad");
+  }
+
+  renderOptions(task.options);
+  startTimer();
+}
+
+function renderOptions(options){
+  const box = document.getElementById("options");
+  box.innerHTML = "";
+
+  options.forEach(opt => {
+    const btn = document.createElement("button");
+    btn.innerHTML = opt.text;
+    btn.onclick = () => chooseOption(opt.id);
+    box.appendChild(btn);
+  });
+}
+
+function startTimer(){
+  time = 15;
+  document.getElementById("timerText").innerText = time;
+
+  timer = setInterval(() => {
+    time--;
+    document.getElementById("timerText").innerText = time;
+
+    if(time <= 0){
+      clearInterval(timer);
+      score -= 3;
+      document.getElementById("scoreText").innerText = score;
+      failSara("انتهى الوقت! خسرتِ 3 نقاط. حاولي مرة أخرى.");
+    }
+  },1000);
+}
+
+function chooseOption(choice){
+  if(locked) return;
+
+  const task = tasks[currentTask];
+
+  if(choice === task.answer){
+    locked = true;
+    clearInterval(timer);
+
+    score += 10;
+    document.getElementById("scoreText").innerText = score;
+
+    successSara(task.correctMessage);
+
+    if(currentTask === tasks.length - 1){
+      setTimeout(finishGame, 1200);
+    }else{
+      setTimeout(() => {
+        currentTask++;
+        loadTask();
+      }, 1300);
+    }
+
+  }else{
+    score -= 5;
+    document.getElementById("scoreText").innerText = score;
+    failSara(task.wrongMessage);
+  }
+}
+
+function successSara(message){
+  setMouth("happy");
+  document.getElementById("saraText").innerText = message;
+  document.getElementById("message").innerText = "✅ اختيار صحيح! +10 نقاط";
+
+  const stars = document.getElementById("stars");
+  stars.classList.add("show");
+
+  setTimeout(() => {
+    stars.classList.remove("show");
+  },900);
+}
+
+function failSara(message){
+  setMouth("sad");
+  document.getElementById("saraText").innerText = message;
+  document.getElementById("message").innerText = "❌ اختيار غير صحيح";
+
+  const scene = document.getElementById("officeScene");
+  scene.classList.add("shake");
+
+  setTimeout(() => {
+    scene.classList.remove("shake");
+  },400);
+}
+
+function finishGame(){
+  clearInterval(timer);
+  locked = true;
+
+  setMouth("happy");
+
+  document.getElementById("screenText").innerHTML = "🌐<br>Connected";
+  document.getElementById("router").classList.add("ok");
+
+  document.getElementById("saraText").innerText =
+    "رائع! عادت الشبكة للعمل، وأستطيع الآن إكمال عملي. شكرًا لمساعدتكِ.";
+
+  document.getElementById("taskTitle").innerText = "تم إصلاح المشكلة";
+  document.getElementById("message").innerText =
+    "🏆 انتهت المهمة! نتيجتك النهائية: " + score;
+
+  document.getElementById("options").innerHTML = "";
+
+  const stars = document.getElementById("stars");
+  stars.classList.add("show");
+}
+
+function restartGame(){
+  currentTask = 0;
+  score = 100;
+  locked = false;
+  document.getElementById("router").classList.remove("ok");
+  loadTask();
+}
+
+loadTask();
+</script>
+
+</body>
+</html>
