@@ -35,6 +35,7 @@ h1,h2{color:#24304f;}
   padding:20px 14px;
   box-shadow:0 10px 25px rgba(0,0,0,.12);
   cursor:pointer;
+  touch-action: manipulation; /* ← أضيفي هذا */
   transition:.3s;
   display:flex;
   flex-direction:column;
@@ -976,17 +977,25 @@ function showScreen(id){
   document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
   document.getElementById(id).classList.add("active");
 
+  /* ← أضيفي هذا السطر: يُصلح مشكلة iOS عند الرجوع أثناء السحب */
+  document.body.style.overflow = "";
+
   clearInterval(networkTimer);
   clearInterval(officeTimerInterval);
 
   if(id === "networkScreen"){
     restartNetworkGame();
   }
-
   if(id === "officeScreen"){
     officeTask = 0;
     officeScore = 100;
     loadOfficeTask();
+  }
+  /* ← أضيفي هذا: تنظيف لعبة البطاقات عند الرجوع */
+  if(id !== "cardsScreen"){
+    currentCard = null;
+    const cc = document.getElementById("currentCard");
+    if(cc) cc.innerHTML = "";
   }
 }
 
@@ -1318,7 +1327,7 @@ function startTouchDrag(event){
 	
     card.style.pointerEvents = "none";
     const elementBelow = document.elementFromPoint(e.clientX, e.clientY);
-    card.style.pointerEvents = "auto";
+    card.style.pointerEvents = "";
 
     const category = elementBelow ? elementBelow.closest(".category") : null;
 
