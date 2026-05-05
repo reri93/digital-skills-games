@@ -449,7 +449,7 @@ button{
 
 .stars{
   position:absolute;
-  top:70px;
+  top:60px;
   left:0;
   right:0;
   font-size:28px;
@@ -595,6 +595,68 @@ button{
   color:#64748b;
   opacity:.8;
 }
+/* تحسين ألعاب المكتب والشبكة للجوال */
+.options,
+.office-tools{
+  width:100%;
+  max-width:520px;
+  margin:20px auto;
+  padding:0 12px;
+  box-sizing:border-box;
+  display:grid;
+  grid-template-columns:repeat(2, 1fr);
+  gap:12px;
+  justify-items:center;
+}
+
+.options button,
+.office-tools button{
+  width:100%;
+  max-width:180px;
+  min-height:85px;
+  margin:0;
+  box-sizing:border-box;
+}
+
+/* تصغير مشهد سارة على الجوال */
+@media (max-width:480px){
+  .screen{
+    padding:18px 10px;
+  }
+
+  .office-scene{
+    width:100%;
+    max-width:360px;
+    box-sizing:border-box;
+    padding:18px 10px;
+  }
+
+  .speech{
+    width:90%;
+    font-size:14px;
+  }
+
+  .desk{
+    width:300px;
+  }
+
+  .laptop{
+    left:90px;
+  }
+
+  .options,
+  .office-tools{
+    grid-template-columns:repeat(2, 1fr);
+    max-width:360px;
+    padding:0 8px;
+  }
+
+  .options button,
+  .office-tools button{
+    max-width:160px;
+    font-size:14px;
+  }
+}
 </style>
 </head>
 
@@ -610,13 +672,13 @@ button{
   <div class="game-card" onclick="showScreen('officeScreen')">
   <div class="icon">💼</div>
   <h2>تحدي المكتب الذكي</h2>
-  <p>ساعدي سارة في اختيار الأداة المناسبة</p>
+  <p>ساعدي سمر في اختيار الأداة المناسبة</p>
 </div>
 
 <div class="game-card" onclick="showScreen('networkScreen')">
   <div class="icon">🌐</div>
   <h2>مهمة إصلاح الشبكة</h2>
-  <p>ساعدي سارة في تشخيص مشكلة الإنترنت وإصلاحها</p>
+  <p>ساعدي سمر في تشخيص مشكلة الإنترنت وإصلاحها</p>
 </div>
     <div class="game-card" onclick="showScreen('robotScreen')">
       <div class="icon">🤖</div>
@@ -749,7 +811,7 @@ button{
   <div class="office-scene" id="officeScene">
 
     <div class="speech">
-      <span id="saraText">مرحبًا، أنا سارة. ساعديني في اختيار الأداة المناسبة للمهمة.</span>
+      <span id="saraText">مرحبًا، أنا سمر. ساعديني في اختيار الأداة المناسبة للمهمة.</span>
     </div>
 
     <div class="stars" id="stars">✨ ⭐ ✨</div>
@@ -819,6 +881,19 @@ button{
 function showScreen(id){
   document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
   document.getElementById(id).classList.add("active");
+
+  clearInterval(networkTimer);
+  clearInterval(officeTimerInterval);
+
+  if(id === "networkScreen"){
+    restartNetworkGame();
+  }
+
+  if(id === "officeScreen"){
+    officeTask = 0;
+    officeScore = 100;
+    loadOfficeTask();
+  }
 }
 
 /* لعبة الروبوت */
@@ -1526,7 +1601,7 @@ function restartNetworkGame(){
   loadNetworkTask();
 }
 
-loadNetworkTask();
+
 </script>
 </body>
 </html>
